@@ -27,3 +27,5 @@ data/siglip_image_emb/
 data/qwen3_vl_metadata/
 data/sampled_images/
 data/bigly_files.zip
+data/incoming
+data/sampled_dataset_metadata.json

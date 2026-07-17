@@ -10,9 +10,9 @@ Two stages you can run separately:
     python -m fashion_retrieval.indexer.index --limit 20      # first 20 images
 """
 
-"Just fallbacks for the VLM's JSON schema, which is the source of truth."
-
 from __future__ import annotations
+
+# Just fallbacks for the VLM's JSON schema, which is the source of truth.
 
 import argparse
 import glob
