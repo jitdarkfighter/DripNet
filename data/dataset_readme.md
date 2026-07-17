@@ -4,7 +4,7 @@
 (HuggingFace `train`, ~45k). Used for the multimodal fashion retrieval system.
 
 Sampled dataset, meta-data generated using Qwen, are all available in `bigly_files.zip`
-[Bigly_files.zip Drive link](https://drive.google.com/file/d/1MDnKQ7wkX_Nfmmrhjjk8E_g5LWWvIxqe/view?usp=sharing)
+[Bigly_files.zip Drive link](https://drive.google.com/file/d/1NkqAM56hqsUvmvfEH0wbcgBtIM30LRCd/view?usp=sharing)
 
 
 Each image has its own JSON; `attributes.jsonl` is a small dump (first 20 records) for a

@@ -22,7 +22,7 @@ import os
 import numpy as np
 from tqdm import tqdm
 
-from fashion_retrieval.configs.config import Config, CONFIG
+from fashion_retrieval.configs.config import Config, CONFIG, ROOT
 from fashion_retrieval.indexer.attributes import attrs_to_text, flat_attrs
 from fashion_retrieval.indexer.embed import SiglipEncoder
 from fashion_retrieval.indexer.storage import VectorStore
@@ -61,7 +61,11 @@ def caption_and_embed_all(config: Config = CONFIG, limit: int | None = None) -> 
 
 
 def _resolve_image(stem: str, config: Config) -> str:
-    """Find an image by stem, checking the dataset dir before curated drops."""
+    """Find an image by stem, checking the dataset dir before curated drops.
+
+    Returns a path *relative to the project root* so records.jsonl stays portable
+    across machines; consumers join it back onto ROOT when they load the records.
+    """
     for cand in (
         os.path.join(str(config.images_dir), f"{stem}.jpg"),
         os.path.join(str(config.curated_dir), f"{stem}.jpg"),
@@ -69,8 +73,8 @@ def _resolve_image(stem: str, config: Config) -> str:
         os.path.join(str(config.curated_dir), f"{stem}.png"),
     ):
         if os.path.exists(cand):
-            return cand
-    return os.path.join(str(config.images_dir), f"{stem}.jpg")
+            return os.path.relpath(cand, ROOT)
+    return os.path.relpath(os.path.join(str(config.images_dir), f"{stem}.jpg"), ROOT)
 
 
 def load_records(config: Config = CONFIG) -> list[dict]:

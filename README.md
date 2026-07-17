@@ -1,9 +1,54 @@
 # Fashion Retrieval
-
-Natural-language search over a fashion image database. Type
-*"a red tie and a white shirt in a formal setting"* → get the top-k matching images.
+Natural-language search over a fashion image database.
 
 Powered by Qwen3-VL, SigLIP, and an unhealthy amount of FAISS.
+
+## Usage
+
+```bash
+# Offline: caption + embed every image, then build both FAISS indexes.
+python -m fashion_retrieval.indexer.index
+python -m fashion_retrieval.indexer.index --caption-only    # just JSON + .npy (GPU)
+python -m fashion_retrieval.indexer.index --build-only      # just FAISS (GPU-free)
+python -m fashion_retrieval.indexer.index --limit 20        # first 20 images
+```
+
+After this, you may use `demo.ipynb`
+
+```bash
+# Online: search (a = fusion weight; a=1 text-only, a=0 image-only)
+python -m fashion_retrieval.retriever.retrieve "professional business attire inside a modern office" -k 5 -a 0.5
+
+# Add a new image end-to-end, then rebuild to make it searchable
+python -m fashion_retrieval.indexer.ingest path/to/image.jpg
+python -m fashion_retrieval.indexer.index --build-only
+```
+
+Notebooks: `vlm.ipynb` (offline driver) and `online_ingest.ipynb` (drop-folder demo) are thin
+wrappers over this package; `retrieval_eval.ipynb` is the eval scratchpad.
+
+# Demo
+
+Try the image search in `demo.ipynb` - no indexing needed, the zip already has a prebuilt index. Three steps:
+
+```bash
+# 1. Install dependencies (tested on Python 3.11)
+pip install -r requirement.txt
+
+# 2. Download bigly_files.zip (Drive link below) and unzip it into data/
+#you should now have data/index/, data/sampled_images/, data/qwen3_vl_metadata/, ...
+unzip bigly_files.zip -d data/
+
+# 3. Open the notebook and run the cells top-to-bottom
+```
+
+[Bigly_files.zip Drive link](https://drive.google.com/file/d/1NkqAM56hqsUvmvfEH0wbcgBtIM30LRCd/view?usp=sharing) holds the sampled dataset plus the Qwen-generated metadata and FAISS index.
+
+Cell 1 loads the index, then each `demo("...")` cell renders a results grid.
+Search runs on **CPU with no VLM** — the only model it pulls is SigLIP. The
+live-ingest cells at the end additionally download Qwen3-VL, so skip those if you
+just want to search. The demo has also been run over the evaluation queries (end
+of the notebook).
 
 ## Approach
 
@@ -66,25 +111,6 @@ is retrievable via its image vector even if the caption missed the word "tie". T
 > **Critical:** use **`transformers<5`** (tested on 4.57) — the 4-bit `bitsandbytes`
 > loading path breaks under transformers 5.x. See `requirement.txt`.
 
-## Usage
-
-```bash
-# Offline: caption + embed every image, then build both FAISS indexes.
-python -m fashion_retrieval.indexer.index
-python -m fashion_retrieval.indexer.index --caption-only    # just JSON + .npy (GPU)
-python -m fashion_retrieval.indexer.index --build-only      # just FAISS (GPU-free)
-python -m fashion_retrieval.indexer.index --limit 20        # first 20 images
-
-# Online: search (a = fusion weight; a=1 text-only, a=0 image-only)
-python -m fashion_retrieval.retriever.retrieve "professional business attire inside a modern office" -k 5 -a 0.5
-
-# Add a new image end-to-end, then rebuild to make it searchable
-python -m fashion_retrieval.indexer.ingest path/to/image.jpg
-python -m fashion_retrieval.indexer.index --build-only
-```
-
-Notebooks: `vlm.ipynb` (offline driver) and `online_ingest.ipynb` (drop-folder demo) are thin
-wrappers over this package; `retrieval_eval.ipynb` is the eval scratchpad.
 
 ## A known Problem :(
 

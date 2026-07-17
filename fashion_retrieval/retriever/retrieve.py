@@ -14,10 +14,11 @@ outweigh text-image ones, a=0.5 still leans text unless you normalize per query.
 from __future__ import annotations
 
 import argparse
+import os
 
 import faiss
 
-from fashion_retrieval.configs.config import Config, CONFIG
+from fashion_retrieval.configs.config import Config, CONFIG, ROOT
 from fashion_retrieval.indexer.embed import SiglipEncoder
 from fashion_retrieval.indexer.storage import VectorStore
 from fashion_retrieval.retriever.fusion import fused_candidates
@@ -31,6 +32,11 @@ class FusionRetriever:
         self.store = VectorStore.load(config, index_path=config.text_index_path,
                                       records_path=config.records_path)
         self.records = self.store.records
+        # records.jsonl stores project-relative image paths; anchor them to THIS
+        # checkout so they open regardless of cwd (os.path.join leaves any already
+        # absolute path untouched, so an older index keeps working too).
+        for rec in self.records:
+            rec["image_path"] = os.path.join(str(ROOT), rec["image_path"])
         self.image_index = faiss.read_index(str(config.image_index_path))
         assert self.image_index.ntotal == len(self.records), "image index / records out of sync"
         self.encoder = encoder or SiglipEncoder(config)
