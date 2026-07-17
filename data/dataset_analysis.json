@@ -1,0 +1,98 @@
+{
+  "count": 1000,
+  "count_pass": true,
+  "width_range": [
+    335,
+    1024
+  ],
+  "height_range": [
+    462,
+    1024
+  ],
+  "portrait_frac": 0.808,
+  "ann_per_image_median": 7,
+  "distinct_categories": 46,
+  "bucket_image_counts": {
+    "formal": 350,
+    "casual": 946,
+    "outerwear": 280
+  },
+  "top_categories": [
+    [
+      "neckline",
+      745
+    ],
+    [
+      "sleeve",
+      649
+    ],
+    [
+      "shoe",
+      519
+    ],
+    [
+      "dress",
+      426
+    ],
+    [
+      "top, t-shirt, sweatshirt",
+      362
+    ],
+    [
+      "pocket",
+      286
+    ],
+    [
+      "pants",
+      254
+    ],
+    [
+      "collar",
+      211
+    ],
+    [
+      "jacket",
+      170
+    ],
+    [
+      "bag, wallet",
+      160
+    ],
+    [
+      "belt",
+      157
+    ],
+    [
+      "shirt, blouse",
+      127
+    ],
+    [
+      "lapel",
+      116
+    ],
+    [
+      "zipper",
+      110
+    ],
+    [
+      "skirt",
+      102
+    ]
+  ],
+  "color_families_main": {
+    "gray": 391,
+    "blue": 192,
+    "orange": 157,
+    "black": 339,
+    "yellow": 24,
+    "red": 200,
+    "pink": 79,
+    "brown": 118,
+    "cyan": 33,
+    "white": 122,
+    "purple": 17,
+    "green": 19
+  },
+  "color_families_present": 12,
+  "plain_background_frac": 0.032
+}
