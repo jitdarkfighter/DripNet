@@ -105,7 +105,7 @@ is retrievable via its image vector even if the caption missed the word "tie". T
 
 | Role | Model | Notes |
 |------|-------|-------|
-| VLM captioner (offline) | `unsloth/Qwen3-VL-2B-Instruct-unsloth-bnb-4bit` | 4-bit, fits a 6 GB GPU |
+| VLM captioner (offline) | `unsloth/Qwen3-VL-4B-Instruct-unsloth-bnb-4bit` | 4-bit, fits a 6 GB GPU |
 | SigLIP encoder (offline + online, both towers) | `google/siglip2-base-patch16-224` | 768-d, shared text/image latent space, runs on CPU |
 
 > **Critical:** use **`transformers<5`** (tested on 4.57) — the 4-bit `bitsandbytes`

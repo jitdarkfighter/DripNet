@@ -112,7 +112,7 @@ Return ONLY JSON with ALL of these keys, in this exact order (fill unknowns with
 
 
 class Qwen3VLCaptioner:
-    """Qwen3-VL-2B (4-bit). Load once, caption many. Shared by the batch indexer
+    """Qwen3-VL-4B (4-bit). Load once, caption many. Shared by the batch indexer
     and the ingest pipeline."""
 
     def __init__(self, model=None, processor=None, prompt: str = PROMPT, max_new_tokens: int = 320):

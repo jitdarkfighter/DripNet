@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[2]
 @dataclass
 class Config:
     ### VLM captioner (indexing only, never online) 
-    vlm_model: str = "unsloth/Qwen3-VL-2B-Instruct-unsloth-bnb-4bit"
+    vlm_model: str = "unsloth/Qwen3-VL-4B-Instruct-unsloth-bnb-4bit"
     vlm_max_new_tokens: int = 320
     vlm_min_pixels: int = 256 * 28 * 28
     vlm_max_pixels: int = 512 * 28 * 28 #Doesnt fit on my GPU otherwise, but works decent
